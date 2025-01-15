@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Uzdevumi</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="rekini/jquery-1.3.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="rekini/index.css" />
+<link rel="stylesheet" type="text/css" href="rekini/exc.css" />
+<style>
+</style>
+<script>
+//=========================
+
+function rand(x){
+  return Math.floor(Math.random()*x);
+}
+
+//=========================
+
+U={};
+Uc=0;
+CU=0;
+TT=0;
+function newU(a){
+  var u={
+    c:0,
+    t:0
+  };
+  $.extend(u,a);
+  U[Uc++]=u;
+}
+
+newU({title:"Saskaitīšana x+1",file:"exc(x+c).js",p:{x:10,c:1}});
+newU({title:"Saskaitīšana x+2",file:"exc(x+c).js",p:{x:10,c:2}});
+newU({title:"Saskaitīšana x+3",file:"exc(x+c).js",p:{x:10,c:3}});
+newU({title:"Saskaitīšana x+4",file:"exc(x+c).js",p:{x:10,c:4}});
+newU({title:"Saskaitīšana x+5",file:"exc(x+c).js",p:{x:10,c:5}});
+newU({title:"Saskaitīšana x+6",file:"exc(x+c).js",p:{x:10,c:6}});
+newU({title:"Saskaitīšana x+7",file:"exc(x+c).js",p:{x:10,c:7}});
+newU({title:"Saskaitīšana x+8",file:"exc(x+c).js",p:{x:10,c:8}});
+newU({title:"Saskaitīšana x+9",file:"exc(x+c).js",p:{x:10,c:9}});
+newU({title:"Saskaitīšana x+x &lt;= 10",file:"exc001c.js",p:{x1:10,x2:10}});
+newU({title:"Saskaitīšana x+x &gt;= 10",file:"exc(x+x ge 10).js",p:{x1:10,x2:10}});
+newU({title:"Saskaitīšana x+x",file:"exc001.js",p:{x1:10,x2:10}});
+newU({title:"Saskaitīšana 10+x",file:"exc001b.js",p:{x1:10,x2:10}});
+newU({title:"Saskaitīšana xx+xx bez P",file:"exc(xx+xx).js"});
+newU({title:"Saskaitīšana xx+xx ar P",file:"exc(xx+xx)arP.js"});
+newU({title:"Saskaitīšana xx+xx",file:"exc001.js",p:{x1:100,x2:100}});
+newU({title:"Saskaitīšana xxx+xxx",file:"exc001.js",p:{x1:1000,x2:1000}});
+newU({title:"Atņemšana xx-xx",file:"exc003.js",p:{x1:100}});
+newU({title:"Atņemšana (0|1)x-x",file:"exc(xx-xx).js",p:{x1:20,x2:10}});
+newU({title:"Atņemšana xx-x",file:"exc(xx-xx).js",p:{x1:100,x2:10}});
+newU({title:"Reizināšana x*2",file:"exc(x*c).js",p:{x:10,c:2}});
+newU({title:"Reizināšana x*3",file:"exc(x*c).js",p:{x:10,c:3}});
+newU({title:"Reizināšana x*4",file:"exc(x*c).js",p:{x:10,c:4}});
+newU({title:"Reizināšana x*5",file:"exc(x*c).js",p:{x:10,c:5}});
+newU({title:"Reizināšana x*6",file:"exc(x*c).js",p:{x:10,c:6}});
+newU({title:"Reizināšana x*7",file:"exc(x*c).js",p:{x:10,c:7}});
+newU({title:"Reizināšana x*8",file:"exc(x*c).js",p:{x:10,c:8}});
+newU({title:"Reizināšana x*9",file:"exc(x*c).js",p:{x:10,c:9}});
+newU({title:"Reizināšana x*x",file:"exc002.js",p:{x1:8,x2:8,min:2}});
+newU({title:"Reizināšana xx*x",file:"exc002.js",p:{x1:98,x2:9,min:2}});
+newU({title:"Reizināšana xx*xx",file:"exc002.js",p:{x1:98,x2:98,min:2}});
+newU({title:"Dalīšana xx/x",file:"exc006.js",p:{x1:8,x2:8,min:2}});
+newU({title:"Izteiksme X+-*X+-*X",file:"exc004.js"});
+newU({title:"Izteiksme ax+b",file:"exc005.js"});
+
+
+
+function updateP(){
+  $('#exc'+CU+' .count').html(U[CU].c+'/'+U[CU].t);
+}
+function addPC(c,t){
+  U[CU].c+=c;
+  U[CU].t+=t;
+  updateP();   
+}
+function getParams(){
+  return U[CU].params;
+}
+
+function showEXC(){
+  $('#exc').html(EXC.html);  
+}
+
+function gen(){
+  EXC.gen(U[CU].p?U[CU].p:{});
+  showEXC();
+  if (EXC.afterHtml) {EXC.afterHtml();}
+}
+
+function check(){
+  if (EXC.check()){
+    $('#answ').html('<span class="correct">PAREIZI</span>').stop(true,true).show().fadeOut(3000);
+    addPC(1,1);
+    log({c:1,izt:EXC.answ});
+  } else {
+    $('#answ').html('<span class="wrong">NEPAREIZI</span><br />'+EXC.answ).stop(true,true).show().fadeOut(3000);
+    addPC(0,1);
+    log({c:0,izt:EXC.answ,a:EXC.answer()});    
+  }
+  gen();
+}
+
+function selectExc(k){
+  $('#exc'+CU).removeClass('sel');
+  CU=k;
+  $('#exc'+k).addClass('sel');
+  $('#top').html('uzdevums: '+U[k].title);
+  $.include('rekini/'+U[k].file,function(){
+    gen();
+  });
+}
+
+function log(d){
+  var s='';
+  TT++;
+  s='<div style="padding:1px; background:'+(d.c==1?'#afa':'#faa')+'">'+TT+') <b>'+d.izt+'</b>'+(d.c==0?' (atb: '+d.a+')':'')+'</div>';
+  $('#log').prepend(s);
+}
+
+$(function(){
+  var s='';
+  for(var i in U){
+    s+='<a href="#" class="exc" id="exc'+i+'" excid="'+i+'">'+U[i].title+'<span class="count">0/0</span></a>';    
+  }  
+  $('#menu').append(s).find('.exc').click(function(){
+    selectExc($(this).attr('excid'));
+    return false;
+  });
+  
+  
+  selectExc(CU);
+});
+
+/**
+ * $.include - script inclusion jQuery plugin
+ * Based on idea from http://www.gnucitizen.org/projects/jquery-include/
+ * @author Tobiasz Cudnik
+ * @link http://meta20.net/.include_script_inclusion_jQuery_plugin
+ * @license MIT
+ */
+// overload jquery's onDomReady
+if ( jQuery.browser.mozilla || jQuery.browser.opera ) {
+	document.removeEventListener( "DOMContentLoaded", jQuery.ready, false );
+	document.addEventListener( "DOMContentLoaded", function(){ jQuery.ready(); }, false );
+}
+jQuery.event.remove( window, "load", jQuery.ready );
+jQuery.event.add( window, "load", function(){ jQuery.ready(); } );
+jQuery.extend({
+	includeStates: {},
+	include: function(url, callback, dependency){
+		if ( typeof callback != 'function' && ! dependency ) {
+			dependency = callback;
+			callback = null;
+		}
+		url = url.replace('\n', '');
+		jQuery.includeStates[url] = false;
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.onload = function () {
+			jQuery.includeStates[url] = true;
+			if ( callback )
+				callback.call(script);
+		};
+		script.onreadystatechange = function () {
+			if ( this.readyState != "complete" && this.readyState != "loaded" ) return;
+			jQuery.includeStates[url] = true;
+			if ( callback )
+				callback.call(script);
+		};
+		script.src = url;
+		if ( dependency ) {
+			if ( dependency.constructor != Array )
+				dependency = [dependency];
+			setTimeout(function(){
+				var valid = true;
+				$.each(dependency, function(k, v){
+					if (! v() ) {
+						valid = false;
+						return false;
+					}
+				})
+				if ( valid )
+					document.getElementsByTagName('head')[0].appendChild(script);
+				else
+					setTimeout(arguments.callee, 10);
+			}, 10);
+		}
+		else
+			document.getElementsByTagName('head')[0].appendChild(script);
+		return function(){
+			return jQuery.includeStates[url];
+		}
+	},
+	readyOld: jQuery.ready,
+	ready: function () {
+		if (jQuery.isReady) return;
+		imReady = true;
+		$.each(jQuery.includeStates, function(url, state) {
+			if (! state)
+				return imReady = false;
+		});
+		if (imReady) {
+			jQuery.readyOld.apply(jQuery, arguments);
+		} else {
+			setTimeout(arguments.callee, 10);
+		}
+	}
+});
+  
+</script>
+</head>
+<body>
+  <div style="width:970px; margin:0 auto;">
+    <div id="col1">
+      <div id="log">
+      </div>
+      <div id="menu"></div>
+    </div>
+    <div id="col2" style="position:relative">
+      <div id="top" style="height:64px; font-Size:32px; padding:2px; color:#484; text-align:center;"></div>
+      <div id="exc" style="width:100%; height:500px;"></div>
+      <div id="answ"></div>
+    </div>
+    <div style="clear:both; "></div>
+  
+  </div>
+</body>
+</html>

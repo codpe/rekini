@@ -1,0 +1,98 @@
+body,html{
+margin:0;
+padding:0;
+}
+a{
+ text-decoration:none;
+ color:#484;
+}
+#col1{
+  float:left; 
+  width:230px; 
+  background:#eee; 
+  /*height:570px;*/
+  padding:5px;
+  position:relative;
+}
+#col2{
+  float:left; 
+  width:730px;
+}
+
+#log{
+bottom:0px; 
+border:1px solid #888; 
+height:200px;
+width:230px;
+font-Size:16px;
+overflow-y:scroll;
+font-Size:16px;
+}
+
+.exc {
+  display:inline-block;
+  width:220px;
+  font-Size:14px;
+  background:#ddd;
+  margin:2px 3px;  
+  padding:2px;
+}
+.exc:hover{
+  background:#bbb;
+}
+.sel{
+  background:#88d;
+}
+.exc .count{
+  float:right;
+}
+
+#answ{
+  position:absolute;
+  top:250px;
+  left:100px;
+  width:530px;
+  font-Size:72px;  
+  text-align:center;
+  display:none;
+  padding:10px;
+  border:1px solid #888;
+  background:#dfd;
+  margin:0 auto;
+}
+.correct{
+  color:green;
+}
+.wrong{
+  color:red;
+}
+
+.exc001{
+  text-align:center;
+  font-Size:64px;
+}
+
+.exc001 input{
+  font-Size:64px;
+  width:120px;
+}
+
+
+.exc002{
+  text-align:right;
+  font-Size:64px;
+  width:200px;
+  margin: 0 auto;
+}
+.exc002 input{
+  text-align:right;
+  font-Size:64px;
+  width:120px;
+}
+
+.exc002 input.b2{
+  display: inline-block;
+  text-align:center;
+  font-Size:64px;
+  width:32px;
+}

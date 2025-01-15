@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.json-1.3.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.7.1.custom.min.js"></script>
+<script type="text/javascript" src="js/dati.js"></script>
+<script>
+function con(a){console.info(a);}
+$(function(){
+ gen();
+});
+function update(){
+  $('#l').html(G.l);
+  $('#p').html(G.p);
+}
+G={};
+G.l=0;
+G.p=0;
+G.rezi==0;
+G.rez='';
+function gen(){
+  var l=D.length;
+  txti=Math.floor(Math.random()*l);
+  G.rezi=txti;
+  G.rez=D[txti].txt[0];
+  var s='';
+  s='<img src="img/'+D[txti].img+'" style="height:240px; "/>';
+  $('#f2').html(s);
+  $('#rez').val('');
+  $('#rez').focus();    
+}
+function check(){
+  var ok=false;
+  var val=$('#rez').val();
+  for(var i in D[G.rezi].txt){
+    if (D[G.rezi].txt[i]==val) {ok=true; break;}
+  }
+  if (ok) {
+    G.l+=1;
+    G.p+=1;
+    update();
+    $('#msg').html('PAREIZI').css({color:'green'}).stop(true,true).show().fadeOut(3000);    
+    gen();
+
+  } else {
+    if(G.l>0){G.l-=1;}
+    $('#msg').html('NEPAREIZI '+G.rez).css({color:'red'}).stop(true,true).show().fadeOut(6000);
+    update();
+    $('#rez').val('');
+    $('#rez').focus();  
+  }
+  
+}
+function onkey(e){
+  if (e.keyCode==13){
+    check();
+  }
+}
+</script>
+<style>
+body,html{
+padding:0;
+margin:0;
+}
+#top{
+  height:70px;
+  background:#bbb;
+  border-bottom:2px solid #888;
+  font-Size:32px;
+}
+#l{
+color:green;  
+}
+#p{
+color:red;
+}
+#f1{
+text-align:center;
+font-Size:96px;
+}
+#f2{
+  height:240px;
+}
+#rez{
+  font-Size:48px;
+  width:500px;
+  border:1px solid #888;
+  text-align:center;
+  
+}
+#msg{
+font-Size:96px;
+padding-top:20px;
+}
+</style>
+</head>
+<body>
+<div id="top">
+  <div style="text-align:center">līmenis:<span id="l">0</span><div>
+  <div style="text-align:center">punkti:<span id="p">0</span><div>    
+</div>
+<div id="f1">
+  <div id="f2"></div>
+  <input id="rez" type="text" onkeydown="onkey(event);">
+</div>
+<div id="msg"></div>
+</body>
+</html>
+
